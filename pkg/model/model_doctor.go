@@ -13,6 +13,7 @@ type Doctor struct {
 	Specialization string      `json:"specialization"`
 	Gender         string      `json:"gender"`
 	DateOfBirth    string      `json:"dob"`
+	ProfilePic string  `json:"profilepic"`
 }
 
 func (Doctor) TableName() string {

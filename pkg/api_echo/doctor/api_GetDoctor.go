@@ -1,4 +1,4 @@
-package api_echo
+package doctor
 
 import (
 	"fitliver/pkg/model"
