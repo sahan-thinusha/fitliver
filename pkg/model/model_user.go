@@ -6,12 +6,11 @@ import (
 
 type User struct {
 	Model
-	Firstname string  `json:"firstname"`
-	Lastname  string  `json:"lastname"`
-	Username  string  `json:"username"`
+	Name string  `json:"name"`
+	Email  string  `json:"email"`
 	Password  string  `json:"password"`
 	Token     string  `json:"token"`
-	Role      []*Role `gorm:"many2many:user_role" json:"role"`
+	Role     string  `json:"role"`
 }
 
 func (m *User) PreloadUser(db *gorm.DB) *gorm.DB {

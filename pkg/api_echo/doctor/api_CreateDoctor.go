@@ -1,8 +1,11 @@
 package doctor
 
 import (
+	"fitliver/pkg/env"
 	model "fitliver/pkg/model"
 	op "fitliver/pkg/operation/doctor"
+	"io"
+	"os"
 )
 
 import (
@@ -10,12 +13,58 @@ import (
 )
 
 func CreateDoctor(c echo.Context) (*model.Doctor, error) {
+	name := c.FormValue("name")
+	email := c.FormValue("email")
+	password := c.FormValue("password")
+	dob := c.FormValue("dob")
+	gender := c.FormValue("gender")
+	contactNo := c.FormValue("contactno")
+	address := c.FormValue("address")
+	specialization := c.FormValue("specialization")
+	hospitals := c.FormValue("hospitals")
+
+	user := model.User{}
+	user.Role = env.DOCTOR
+	user.Email = email
+	user.Password = password
+	user.Name = name
+
 	doctor := model.Doctor{}
-	if error := c.Bind(&doctor); error != nil {
-		return nil, error
+	doctor.User = user
+	doctor.Name = name
+	doctor.DateOfBirth = dob
+	doctor.Gender = gender
+	contact := model.ContactNo{}
+	contact.ContactNo = contactNo
+	doctor.ContactNo = append([]*model.ContactNo{},&contact)
+	doctor.Address = address
+	doctor.Specialization = specialization
+	doctor.IsApproved = false
+
+	file, err := c.FormFile("profile_pic")
+	if err != nil {
+		return nil,err
 	}
-	result,err := op.DoctorRegister(&doctor)
+	src, err := file.Open()
+	if err != nil {
+		return nil,err
+	}
+	defer src.Close()
 
+
+	dst, err := os.Create(file.Filename)
+	if err != nil {
+		return nil,err
+	}
+	defer dst.Close()
+
+	if _, err = io.Copy(dst, src); err != nil {
+		return nil,err
+	}
+
+	doctor.ProfilePic = file.Filename
+
+
+	result,err := op.DoctorRegister(&doctor,hospitals)
 	return result, err
-
 }

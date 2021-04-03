@@ -21,6 +21,10 @@ func CreateBlogPost(c echo.Context) error {
 
 
 func APIControllerBlog(g *echo.Group) {
-	g.POST("/doctor/create", CreateDoctor)
-	g.GET("/doctor/:id", GetDoctor)
+	g.POST("/blog", CreateDoctor)
+	g.GET("/blog/:id", GetDoctor)
+	g.GET("/blog", GetDoctor)
+	g.POST("/blog/comment:id", GetDoctor)
+	g.PUT("/blog/comment", GetDoctor)
+	g.DELETE("/blog/comment", GetDoctor)
 }

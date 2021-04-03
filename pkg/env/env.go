@@ -22,3 +22,8 @@ var DBpwd = "sahan"
 
 
 
+const (
+	DOCTOR = "ROLE_DOCTOR"
+	PATIENT = "ROLE_PATIENT"
+	ADMIN = "ROLE_ADMIN"
+)
