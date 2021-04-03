@@ -1,10 +1,9 @@
 package main
 
 import (
-	model "fitliver/pkg/model"
 	logger "fitliver/pkg/logger"
+	model "fitliver/pkg/model"
 	gorm "github.com/jinzhu/gorm"
-	"os"
 )
 
 import (
@@ -21,32 +20,15 @@ import (
 )
 import (
 	"fitliver/pkg/controller_echo"
-
 )
 import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func readEnvs() {
-
-	if val := os.Getenv(env.REST_PORT); val != "" {
-		env.RestPort = val
-	}
-
-	if val := os.Getenv(env.E3_URL); val != "" {
-		env.E3url = val
-	}
-	if val := os.Getenv(env.E3_DIALET); val != "" {
-		env.E3DIALET = val
-	}
-}
 
 func main() {
 
-	readEnvs()
-	env.LoadEnvs()
-
-	database0, err := gorm.Open("mysql", env.E3user+":"+env.E3pwd+"@tcp("+env.E3host+":"+env.E3port+")/"+env.E3db+"?charset=utf8mb4&parseTime=True&loc=Local")
+	database0, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		logger.Log.Error(err)
 	}
@@ -79,14 +61,18 @@ func run() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
-	r := e.Group("")
+	r := e.Group("api")
 	jwtConfig := middleware.JWTConfig{
 
 		Claims:     &JwtCustomClaims{},
 		SigningKey: []byte("secret"),
 	}
 	r.Use(middleware.JWTWithConfig(jwtConfig))
-	controller_echo.APIControllerEcho(r)
+	controller_echo.APIControllerServer(r)
+	controller_echo.APIControllerDoctor(r)
+	controller_echo.APIControllerBlog(r)
+	controller_echo.LoginController(r)
+	controller_echo.APIControllerCalculation(r)
 	e.Logger.Fatal(e.Start(":" + env.RestPort))
 }
 
