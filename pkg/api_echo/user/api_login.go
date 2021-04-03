@@ -7,21 +7,13 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"strings"
 	"time"
 )
+
 type Payload struct {
-	Username   string `json:"username"`
+	Email      string `json:"email"`
 	Password   string `json:"password"`
 	RememberMe bool   `json:"rememberme"`
-}
-
-
-type JwtCustomClaims struct {
-	Sub  string
-	Auth string
-
-	jwt.StandardClaims
 }
 
 
@@ -39,21 +31,24 @@ func Login(c echo.Context) error {
 	var targetUser *model.User
 	if len(users) == 0 {
 		targetUser = &model.User{}
-		targetUser.Role =env.ADMIN
-		targetUser.Email =  "admin"
+		targetUser.Role = env.ADMIN
+		targetUser.Email = "admin"
 		targetUser.Password = "admin"
 		targetUser.Name = "Admin"
 		db.Create(&targetUser)
-	}
-	for _, user := range users {
-		if strings.EqualFold(user.Email, loginRequest.Username) && strings.EqualFold(user.Password, loginRequest.Password) {
-			targetUser = user
+	} else {
+		user := model.User{}
+		b := db.Where("email = ? AND password = ?", loginRequest.Email, loginRequest.Password).First(&user).RecordNotFound()
+		if !b {
+			targetUser = &user
 		}
 	}
+
 	if targetUser == nil {
 		return c.JSON(http.StatusBadRequest, nil)
 	}
-	claims := JwtCustomClaims{"admin", "ROLE_ADMIN,ROLE_PATIENT,ROLE_DOCTOR", jwt.StandardClaims{
+
+	claims := env.JwtCustomClaims{Sub: targetUser.Email, Auth: targetUser.Role, StandardClaims: jwt.StandardClaims{
 		ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		IssuedAt:  time.Now().Unix(),
 	}}

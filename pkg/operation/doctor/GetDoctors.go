@@ -5,14 +5,14 @@ import (
 	"fitliver/pkg/model"
 )
 
-func GetDoctor(id int)  (*model.Doctor,error){
+func GetDoctors()  ([]*model.Doctor,error){
 	db :=env.RDB
+	doctors := []*model.Doctor{}
 	doctor := model.Doctor{}
-
-	err := doctor.PreloadDoctor(db).Where("id = ?",id).First(&doctor).Error
+	err := doctor.PreloadDoctor(db).Find(&doctors).Error
 	if err!=nil{
 		return nil,err
 	}else{
-		return &doctor,nil
+		return doctors,nil
 	}
 }

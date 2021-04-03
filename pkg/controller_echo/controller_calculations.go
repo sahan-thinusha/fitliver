@@ -20,5 +20,5 @@ func CalculateBMI(c echo.Context) error {
 }
 
 func APIControllerCalculation(g *echo.Group) {
-	g.GET("/other/bmi", CalculateBMI)
+	g.GET("api/other/bmi", CalculateBMI)
 }

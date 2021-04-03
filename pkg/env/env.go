@@ -1,6 +1,7 @@
 package env
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	gorm "github.com/jinzhu/gorm"
 )
 
@@ -27,3 +28,9 @@ const (
 	PATIENT = "ROLE_PATIENT"
 	ADMIN = "ROLE_ADMIN"
 )
+
+type JwtCustomClaims struct {
+	Sub  string
+	Auth string
+	jwt.StandardClaims
+}

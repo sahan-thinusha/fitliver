@@ -1,6 +1,5 @@
 package controller_echo
 
-
 import (
 	"fitliver/pkg/api_echo/doctor"
 	"fitliver/pkg/api_echo/hospital"
@@ -30,10 +29,10 @@ func GetHospitalById(c echo.Context) error {
 	}
 }
 func APIControllerHospital(g *echo.Group) {
-	g.GET("/hospital/:id", GetHospitalById)
-	g.GET("/hospital", GetHospitals)
+	g.GET("api/hospital/:id", GetHospitalById)
+	g.GET("api/gethospitals", GetHospitals)
 }
 
 func APIControllerHospitalBase(g *echo.Group) {
-	g.GET("/hospital", GetHospitals)
+	g.GET("api/hospital", GetHospitals)
 }

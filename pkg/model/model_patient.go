@@ -6,8 +6,12 @@ import (
 
 type Patient struct {
 	Model
-	Name string `json:"name"`
-	Dob  string `json:"dob"`
+	Name           string      `json:"name"`
+	Gender         string      `json:"gender"`
+	DateOfBirth    string      `json:"dob"`
+	ProfilePic string  `json:"profilepic"`
+	User     User `gorm:"foreignkey:userID" json:"user"`
+	UserID int64
 }
 
 func (Patient) TableName() string {

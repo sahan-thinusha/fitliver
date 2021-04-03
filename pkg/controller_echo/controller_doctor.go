@@ -18,6 +18,18 @@ func GetDoctor(c echo.Context) error {
 	}
 }
 
+func GetDoctors(c echo.Context) error {
+	result, err := doctor.GetDoctors(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
 func APIControllerDoctor(g *echo.Group) {
-	g.GET("/doctor/:id", GetDoctor)
+	g.GET("api/doctor/:id", GetDoctor)
+	g.GET("api/doctors", GetDoctors)
+	g.GET("api/doctors/disabled", GetDoctors)
+
 }
