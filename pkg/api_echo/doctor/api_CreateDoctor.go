@@ -6,6 +6,8 @@ import (
 	op "fitliver/pkg/operation/doctor"
 	"io"
 	"os"
+	"strconv"
+	"time"
 )
 
 import (
@@ -41,6 +43,8 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 	doctor.Specialization = specialization
 	doctor.IsApproved = false
 
+
+
 	file, err := c.FormFile("profile_pic")
 	if err != nil {
 		return nil,err
@@ -52,7 +56,13 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 	defer src.Close()
 
 
-	dst, err := os.Create(file.Filename)
+	folderPath := "doctor_images"
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		_ = os.Mkdir(folderPath, os.ModePerm)
+	}
+
+	fileSuffix := strconv.FormatInt(time.Now().UnixNano(), 10)
+	dst, err := os.Create(folderPath + "/" + fileSuffix + "_" + file.Filename)
 	if err != nil {
 		return nil,err
 	}

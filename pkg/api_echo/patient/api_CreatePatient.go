@@ -7,6 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"io"
 	"os"
+	"strconv"
+	"time"
 )
 
 func CreatePatient(c echo.Context) (*model.Patient, error) {
@@ -38,7 +40,13 @@ func CreatePatient(c echo.Context) (*model.Patient, error) {
 	}
 	defer src.Close()
 
-	dst, err := os.Create(file.Filename)
+	folderPath := "patient_images"
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		_ = os.Mkdir(folderPath, os.ModePerm)
+	}
+
+	fileSuffix := strconv.FormatInt(time.Now().UnixNano(), 10)
+	dst, err := os.Create(folderPath + "/" + fileSuffix + "_" + file.Filename)
 	if err != nil {
 		return nil,err
 	}

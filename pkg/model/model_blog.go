@@ -7,6 +7,11 @@ type Blog struct {
 	Title string `json:"title"`
 	Body  string `json:"body"  gorm:"size:2000"`
 	Image string `json:"image" gorm:"size:256"`
+	User     User `gorm:"foreignkey:userID" json:"user"`
+	UserID int64
+	BlogComment       []*BlogComment  `json:"blog_comment"`
+
+
 }
 
 func (Blog) TableName() string {

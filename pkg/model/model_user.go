@@ -11,6 +11,9 @@ type User struct {
 	Password  string  `json:"password"`
 	Token     string  `json:"token"`
 	Role     string  `json:"role"`
+	Doctor       []*Doctor  `json:"doctor"`
+	Patient       []*Patient  `json:"patient"`
+
 }
 
 func (m *User) PreloadUser(db *gorm.DB) *gorm.DB {
