@@ -15,5 +15,5 @@ func (BlogComment) TableName() string {
 	return "blog_comment"
 }
 func (m *BlogComment) PreloadBlogComment(db *gorm.DB) *gorm.DB {
-	return db
+	return db.Preload("User").Preload("Blog")
 }

@@ -2,7 +2,7 @@ package controller_echo
 
 
 import (
-	"fitliver/pkg/api_echo/doctor"
+	"fitliver/pkg/api_echo/blog"
 	"net/http"
 )
 
@@ -11,7 +11,72 @@ import (
 )
 
 func CreateBlogPost(c echo.Context) error {
-	result, err := doctor.CreateDoctor(c)
+	result, err := blog.CreateBlogPost(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+
+func UpdateBlogPost(c echo.Context) error {
+	result, err := blog.UpdateBlogPost(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+func DeleteBlogPost(c echo.Context) error {
+	result, err := blog.DeleteBlogPost(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+func GetBlogPost(c echo.Context) error {
+	result, err := blog.GetBlogPostbyId(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+func GetBlogPosts(c echo.Context) error {
+	result, err := blog.GetBlogPosts(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+
+func CreateBlogComment(c echo.Context) error {
+	result, err := blog.CreateBlogComment(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+
+func UpdateBlogComment(c echo.Context) error {
+	result, err := blog.UpdateBlogComment(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+func DeleteBlogComment(c echo.Context) error {
+	result, err := blog.CreateBlogPost(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	} else {
@@ -21,10 +86,12 @@ func CreateBlogPost(c echo.Context) error {
 
 
 func APIControllerBlog(g *echo.Group) {
-	g.POST("api/blog", CreateDoctor)
-	g.GET("api/blog/:id", GetDoctor)
-	g.GET("api/blog", GetDoctor)
-	g.POST("api/blog/comment:id", GetDoctor)
-	g.PUT("api/blog/comment", GetDoctor)
-	g.DELETE("api/blog/comment", GetDoctor)
+	g.POST("api/blog", CreateBlogPost)
+	g.PUT("api/blog/:id", UpdateBlogPost)
+	g.DELETE("api/blog/:id", DeleteBlogPost)
+	g.GET("api/blog/:id", GetBlogPost)
+	g.GET("api/blog", GetBlogPosts)
+	g.POST("api/blog/:id/comment", CreateBlogComment)
+	g.PUT("api/blog/comment", UpdateBlogComment)
+	g.DELETE("api/blog/comment", DeleteBlogComment)
 }
