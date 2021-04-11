@@ -21,6 +21,10 @@ var DBuser = "root"
 
 var DBpwd = "sahan"
 
+var StripeAPIKey = "pk_test_51IdOGzIc2dfDJNEgxjsDGTWzPiq2SjJyRkKeqRXiYQoytDe1Ye8QrTJSyoHtLMyaFKKbxeAIqxjxxR3n8alBjfGM00xiDA7cDq"
+
+var StripeSecretKey = "sk_test_51IdOGzIc2dfDJNEgcotpLXZQcC9WtMhubRf3KO4q6oQ8gzY3hrDwJizcL8tWsTRjuBhmpbiLIHNYCiqU9wLLGBtH008jb3bIbc"
+
 
 
 const (

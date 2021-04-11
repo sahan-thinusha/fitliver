@@ -48,7 +48,7 @@ func main() {
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
 		_ = os.Mkdir(folderPath, os.ModePerm)
 	}
-
+	CreateDefaultUser()
 	RunProxy()
 }
 
@@ -75,6 +75,8 @@ func run() {
 		Claims:     &env.JwtCustomClaims{},
 		SigningKey: []byte("secret"),
 	}
+
+
 	r.Use(middleware.JWTWithConfig(jwtConfig))
 	controller_echo.APIControllerServer(r)
 	controller_echo.APIControllerDoctor(r)
@@ -82,6 +84,8 @@ func run() {
 	controller_echo.APIControllerHospital(r)
 	controller_echo.APIControllerPatient(r)
 	controller_echo.APIControllerForum(r)
+	controller_echo.APIControllerPayment(r)
+
 
 	u := e.Group("/")
 	u.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
@@ -99,3 +103,17 @@ func run() {
 }
 
 
+func CreateDefaultUser(){
+	db := env.RDB
+	users := []*model.User{}
+	db.Find(&users)
+	var targetUser *model.User
+	if len(users) == 0 {
+		targetUser = &model.User{}
+		targetUser.Role = env.ADMIN
+		targetUser.Email = "admin"
+		targetUser.Password = "admin"
+		targetUser.Name = "Admin"
+		db.Create(&targetUser)
+	}
+}
