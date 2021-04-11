@@ -72,7 +72,7 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 		return nil,err
 	}
 
-	doctor.ProfilePic = file.Filename
+	doctor.ProfilePic = dst.Name()
 
 
 	result,err := op.DoctorRegister(&doctor,hospitals)

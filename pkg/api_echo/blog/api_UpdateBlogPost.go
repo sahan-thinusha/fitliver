@@ -53,7 +53,7 @@ func UpdateBlogPost(c echo.Context) (*model.Blog, error) {
 		return nil,err
 	}
 
-	blog.Image = file.Filename
+	blog.Image = dst.Name()
 
 
 	result,err := op.BlogPostUpdate(&blog,claims.Sub)

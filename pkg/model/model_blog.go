@@ -10,8 +10,6 @@ type Blog struct {
 	User     User `gorm:"foreignkey:userID" json:"user"`
 	UserID int64
 	BlogComment       []*BlogComment  `json:"blog_comment"`
-
-
 }
 
 func (Blog) TableName() string {

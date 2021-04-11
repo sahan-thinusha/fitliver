@@ -56,7 +56,7 @@ func CreatePatient(c echo.Context) (*model.Patient, error) {
 		return nil,err
 	}
 
-	patient.ProfilePic = file.Filename
+	patient.ProfilePic = dst.Name()
 
 
 	result,err := op.PatientRegister(&patient)

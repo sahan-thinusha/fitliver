@@ -50,8 +50,7 @@ func CreateBlogPost(c echo.Context) (*model.Blog, error) {
 		return nil,err
 	}
 
-	blog.Image = file.Filename
-
+	blog.Image = dst.Name()
 
 	result,err := op.BlogPostCreate(&blog,claims.Sub)
 	return result, err

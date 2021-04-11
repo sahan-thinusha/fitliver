@@ -1,9 +1,11 @@
 package main
 
 import (
+	"crypto/subtle"
 	logger "fitliver/pkg/logger"
 	model "fitliver/pkg/model"
 	gorm "github.com/jinzhu/gorm"
+	"os"
 )
 
 import (
@@ -21,29 +23,36 @@ import (
 import (
 	"fitliver/pkg/controller_echo"
 )
-import (
-	"github.com/dgrijalva/jwt-go"
-)
-
 
 func main() {
 
-	database0, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
+	database, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		logger.Log.Error(err)
 	}
-	env.RDB = database0
+	env.RDB = database
 
-	model.InitModels(database0)
+	model.InitModels(database)
+
+	folderPath := "patient_images"
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		_ = os.Mkdir(folderPath, os.ModePerm)
+	}
+
+	folderPath = "doctor_images"
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		_ = os.Mkdir(folderPath, os.ModePerm)
+	}
+
+	folderPath = "blog_images"
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		_ = os.Mkdir(folderPath, os.ModePerm)
+	}
 
 	RunProxy()
 }
 
-type JwtCustomClaims struct {
-	Sub  string
-	Auth []string
-	jwt.StandardClaims
-}
+
 
 func RunProxy() {
 	flag.Parse()
@@ -51,28 +60,41 @@ func RunProxy() {
 	run()
 }
 
-var (
-	endpoint = flag.String("endpoint", "localhost:50051", "Your Description")
-)
-
 func run() {
 
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
-	r := e.Group("api")
-	jwtConfig := middleware.JWTConfig{
+	e.Static("/patient_images","patient_images")
+	e.Static("/blog_images","blog_images")
+	e.Static("/doctor_images","doctor_images")
 
-		Claims:     &JwtCustomClaims{},
+	r := e.Group("/")
+	jwtConfig := middleware.JWTConfig{
+		Claims:     &env.JwtCustomClaims{},
 		SigningKey: []byte("secret"),
 	}
 	r.Use(middleware.JWTWithConfig(jwtConfig))
 	controller_echo.APIControllerServer(r)
 	controller_echo.APIControllerDoctor(r)
 	controller_echo.APIControllerBlog(r)
-	controller_echo.LoginController(r)
-	controller_echo.APIControllerCalculation(r)
+	controller_echo.APIControllerHospital(r)
+	controller_echo.APIControllerPatient(r)
+	controller_echo.APIControllerForum(r)
+
+	u := e.Group("/")
+	u.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+		if subtle.ConstantTimeCompare([]byte(username), []byte("fitliver")) == 1 &&
+			subtle.ConstantTimeCompare([]byte(password), []byte("fitliver@123")) == 1 {
+			return true, nil
+		}
+		return false, nil
+	}))
+	controller_echo.LoginController(u)
+	controller_echo.APIControllerHospitalBase(u)
+	controller_echo.APIControllerCalculation(u)
+
 	e.Logger.Fatal(e.Start(":" + env.RestPort))
 }
 

@@ -93,5 +93,5 @@ func APIControllerBlog(g *echo.Group) {
 	g.GET("api/blog", GetBlogPosts)
 	g.POST("api/blog/:id/comment", CreateBlogComment)
 	g.PUT("api/blog/comment", UpdateBlogComment)
-	g.DELETE("api/blog/comment", DeleteBlogComment)
+	g.DELETE("api/blog/comment/:id", DeleteBlogComment)
 }
