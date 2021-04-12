@@ -85,7 +85,7 @@ func run() {
 	controller_echo.APIControllerPatient(r)
 	controller_echo.APIControllerForum(r)
 	controller_echo.APIControllerPayment(r)
-
+	controller_echo.APIControllerConsultationService(r)
 
 	u := e.Group("/")
 	u.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {

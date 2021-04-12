@@ -9,7 +9,7 @@ import (
 
 func GetBlogPostbyId(c echo.Context) (*model.Blog, error) {
 	id := c.Param("id")
-		blogId,_ := strconv.ParseInt(id, 10, 64)
+	blogId,_ := strconv.ParseInt(id, 10, 64)
 	result,err := op.BlogPostbyId(blogId)
 	return result, err
 }
