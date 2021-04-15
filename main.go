@@ -12,7 +12,9 @@ import (
 	"fitliver/pkg/env"
 )
 import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	// "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+
 )
 import (
 	"flag"
@@ -26,7 +28,8 @@ import (
 
 func main() {
 
-	database, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
+	//database, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
+	database, err :=gorm.Open("sqlite3", env.DBdb)
 	if err != nil {
 		logger.Log.Error(err)
 	}
