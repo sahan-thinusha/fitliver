@@ -27,4 +27,10 @@ func InitModels(db *gorm.DB) {
 	db.AutoMigrate(&ForumPost{})
 	db.AutoMigrate(&ForumReply{})
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&DietPlan{})
+	db.AutoMigrate(&FoodData{})
+	db.AutoMigrate(&ConsultationService{})
+	db.AutoMigrate(&Payment{})
+	db.AutoMigrate(&Package{})
+	db.AutoMigrate(&Service{})
 }

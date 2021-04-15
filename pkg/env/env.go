@@ -25,7 +25,8 @@ var StripeAPIKey = "pk_test_51IdOGzIc2dfDJNEgxjsDGTWzPiq2SjJyRkKeqRXiYQoytDe1Ye8
 
 var StripeSecretKey = "sk_test_51IdOGzIc2dfDJNEgcotpLXZQcC9WtMhubRf3KO4q6oQ8gzY3hrDwJizcL8tWsTRjuBhmpbiLIHNYCiqU9wLLGBtH008jb3bIbc"
 
-
+var EApiKey = "819a3f4cae29c3e36d30a078f4e440e6"
+var EAppId = "f3669381"
 
 const (
 	DOCTOR = "ROLE_DOCTOR"
@@ -38,3 +39,5 @@ type JwtCustomClaims struct {
 	Auth string
 	jwt.StandardClaims
 }
+
+var FoodAPI = "https://api.edamam.com/api/food-database/v2/parser"

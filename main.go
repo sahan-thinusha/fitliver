@@ -12,8 +12,8 @@ import (
 	"fitliver/pkg/env"
 )
 import (
-	// "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_"github.com/jinzhu/gorm/dialects/mysql"
+	//_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 )
 import (
@@ -28,8 +28,8 @@ import (
 
 func main() {
 
-	//database, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
-	database, err :=gorm.Open("sqlite3", env.DBdb)
+	database, err := gorm.Open("mysql", env.DBuser+":"+env.DBpwd+"@tcp("+env.DBhost+":"+env.DBport+")/"+env.DBdb+"?charset=utf8mb4&parseTime=True&loc=Local")
+	//database, err :=gorm.Open("sqlite3", env.DBdb)
 	if err != nil {
 		logger.Log.Error(err)
 	}
@@ -89,6 +89,7 @@ func run() {
 	controller_echo.APIControllerForum(r)
 	controller_echo.APIControllerPayment(r)
 	controller_echo.APIControllerConsultationService(r)
+	controller_echo.APIControllerDietPlanService(r)
 
 	u := e.Group("/")
 	u.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
