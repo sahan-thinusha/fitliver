@@ -15,11 +15,11 @@ var DBdb = "fitliver"
 
 var DBhost = "127.0.0.1"
 
-var DBport = "3307"
+var DBport = "3306"
 
 var DBuser = "root"
 
-var DBpwd = "sahan"
+var DBpwd = "12345"
 
 var StripeAPIKey = "pk_test_51IdOGzIc2dfDJNEgxjsDGTWzPiq2SjJyRkKeqRXiYQoytDe1Ye8QrTJSyoHtLMyaFKKbxeAIqxjxxR3n8alBjfGM00xiDA7cDq"
 

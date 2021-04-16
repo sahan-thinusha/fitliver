@@ -17,6 +17,7 @@ type Doctor struct {
 	User     User `gorm:"foreignkey:userID" json:"user"`
 	IsApproved  bool      `json:"is_approved"`
 	UserID int64
+	Rate float64  `json:"rating"`
 }
 
 func (Doctor) TableName() string {
