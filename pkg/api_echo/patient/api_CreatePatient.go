@@ -25,7 +25,7 @@ func CreatePatient(c echo.Context) (*model.Patient, error) {
 	user.Name = name
 
 	patient := model.Patient{}
-	patient.User = user
+	patient.User = &user
 	patient.Name = name
 	patient.DateOfBirth = dob
 	patient.Gender = gender

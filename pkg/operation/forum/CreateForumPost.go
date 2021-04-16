@@ -11,7 +11,7 @@ func ForumPostCreate(forum *model.ForumPost,email string)  (*model.ForumPost,err
 	db :=env.RDB
 	user := model.User{}
 	db.Model(model.User{}).Where("email = ?",email).First(&user)
-	forum.User = user
+	forum.User = &user
 	err := db.Create(forum).Error
 	if err!=nil{
 		return nil,err
