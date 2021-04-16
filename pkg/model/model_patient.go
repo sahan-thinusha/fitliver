@@ -10,7 +10,7 @@ type Patient struct {
 	Gender         string      `json:"gender"`
 	DateOfBirth    string      `json:"dob"`
 	ProfilePic string  `json:"profilepic"`
-	User     User `gorm:"foreignkey:userID" json:"user"`
+	User     *User `gorm:"foreignkey:userID" json:"user"`
 	UserID int64
 }
 

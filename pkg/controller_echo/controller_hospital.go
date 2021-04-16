@@ -1,7 +1,6 @@
 package controller_echo
 
 import (
-	"fitliver/pkg/api_echo/doctor"
 	"fitliver/pkg/api_echo/hospital"
 	"net/http"
 )
@@ -19,9 +18,8 @@ func GetHospitals(c echo.Context) error {
 	}
 }
 
-
-func GetHospitalById(c echo.Context) error {
-	result, err := doctor.GetDoctor(c)
+func SaveHospital(c echo.Context) error {
+	result, err := hospital.SaveHospital(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	} else {
@@ -29,8 +27,9 @@ func GetHospitalById(c echo.Context) error {
 	}
 }
 func APIControllerHospital(g *echo.Group) {
-	g.GET("api/hospital/:id", GetHospitalById)
 	g.GET("api/gethospitals", GetHospitals)
+	g.POST("api/gethospital", SaveHospital)
+
 }
 
 func APIControllerHospitalBase(g *echo.Group) {

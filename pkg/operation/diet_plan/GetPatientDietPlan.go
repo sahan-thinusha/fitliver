@@ -6,7 +6,7 @@ import (
 	"fitliver/pkg/model"
 )
 
-func GetPatientDietPlans(id int)([]*model.DietPlan,error){
+func GetPatientDietPlans(id int64)([]*model.DietPlan,error){
 	db :=env.RDB
 	dietPlan := model.DietPlan{}
 	var dietPlans []*model.DietPlan

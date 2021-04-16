@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func GetPatientDietPlansByDate(id int,starting time.Time,ending time.Time)([]*model.DietPlan,error){
+func GetPatientDietPlansByDate(id int64,starting time.Time,ending time.Time)([]*model.DietPlan,error){
 	db :=env.RDB
 	dietPlan := model.DietPlan{}
 	var dietPlans []*model.DietPlan

@@ -10,7 +10,8 @@ import (
 )
 const (Time = "02-01-2006")
 func GetPatientDietPlanForDateRange(c echo.Context) ([]*model.DietPlan, error) {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id:= c.Param("id")
+	patientId,_ := strconv.ParseInt(id, 10, 64)
 	fromDate := c.QueryParam("fromdate")
 	toDate := c.QueryParam("todate")
 
@@ -20,6 +21,6 @@ func GetPatientDietPlanForDateRange(c echo.Context) ([]*model.DietPlan, error) {
 	to, _ := time.Parse(Time, toDate)
 	to = time.Date(to.Year(), to.Month(), to.Day(), 23, 59, 59, 999999999, to.Location())
 
-	result,err := op.GetPatientDietPlansByDate(id,from,to)
+	result,err := op.GetPatientDietPlansByDate(patientId,from,to)
 	return result, err
 }

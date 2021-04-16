@@ -6,7 +6,7 @@ type ForumPost struct {
 	Model
 	Title string `json:"title"`
 	Body  string `json:"body"  gorm:"size:2000"`
-	User     User `gorm:"foreignkey:userID" json:"user"`
+	User     *User `gorm:"foreignkey:userID" json:"user"`
 	HashTags string `json:"tags"`
 	UserID int64
 	ForumReply       []*ForumReply  `json:"forum_reply"`

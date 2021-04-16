@@ -8,7 +8,8 @@ import (
 )
 
 func GetPatientDietPlan(c echo.Context) ([]*model.DietPlan, error) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	result,err := op.GetPatientDietPlans(id)
+	id:= c.Param("id")
+	patientId,_ := strconv.ParseInt(id, 10, 64)
+	result,err := op.GetPatientDietPlans(patientId)
 	return result, err
 }

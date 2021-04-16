@@ -12,9 +12,9 @@ type Payment struct {
 	PaymentId string   `json:"payment_id"`
 	Patient     Patient `gorm:"foreignkey:patientID" json:"patient"`
 	Status  string   `json:"status"`
-	patientID int64
+	PatientID int64
 	Package     Package `gorm:"foreignkey:packageID" json:"package"`
-	packageID int64
+	PackageID int64
 }
 
 func (Payment) TableName() string {

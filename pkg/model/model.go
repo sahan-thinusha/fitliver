@@ -33,4 +33,6 @@ func InitModels(db *gorm.DB) {
 	db.AutoMigrate(&Payment{})
 	db.AutoMigrate(&Package{})
 	db.AutoMigrate(&Service{})
+	db.AutoMigrate(&HealthRecord{})
+
 }
