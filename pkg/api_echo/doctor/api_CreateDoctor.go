@@ -42,6 +42,7 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 	doctor.Address = address
 	doctor.Specialization = specialization
 	doctor.IsApproved = false
+	doctor.IsNew = true
 
 
 
