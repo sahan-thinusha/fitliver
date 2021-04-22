@@ -15,7 +15,7 @@ type Doctor struct {
 	DateOfBirth    string      `json:"dob"`
 	ProfilePic string  `json:"profilepic"`
 	User     User `gorm:"foreignkey:userID" json:"user"`
-	IsApproved  bool      `json:"is_approved"`
+	Status  string
 	UserID int64
 	Rate float64  `json:"rating"`
 }

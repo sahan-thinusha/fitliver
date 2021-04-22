@@ -1,7 +1,5 @@
 package doctor
 
-
-
 import (
 	"errors"
 	"fitliver/pkg/env"

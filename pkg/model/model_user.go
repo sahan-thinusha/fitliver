@@ -28,3 +28,7 @@ func (m *User) PreloadPatient(db *gorm.DB) *gorm.DB {
 func (m *User) PreloadDoctor(db *gorm.DB) *gorm.DB {
 	return db.Preload("Role").Preload("Doctor")
 }
+
+func (m *User) PreloadDoctorPackages(db *gorm.DB) *gorm.DB {
+	return db.Preload("Role").Preload("Doctor").Preload("ConsultationService").Preload("Package")
+}

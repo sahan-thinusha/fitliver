@@ -39,6 +39,24 @@ func ProceedPayment(payment *model.Payment, token string, email string) (*model.
 		return nil, errors.New("Payment Unsuccessful...")
 	}
 	payment.Status = "Successful"
-	db.Save(payment)
+	tx := db.Begin()
+	err =tx.Save(payment).Error
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("Payment Unsuccessful...")
+	}
+	consultationRequest := model.ConsultationRequest{}
+	consultationRequest.Status = env.STATUS_NEW
+	consultationRequest.Package = &pack
+	consultationRequest.Patient = user.Patient
+	err = tx.Create(&consultationRequest).Error
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("Payment Unsuccessful...")
+	}
+
+
+	tx.Commit()
+
 	return payment, nil
 }
