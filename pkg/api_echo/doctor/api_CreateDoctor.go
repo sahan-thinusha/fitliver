@@ -41,8 +41,7 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 	doctor.ContactNo = append([]*model.ContactNo{},&contact)
 	doctor.Address = address
 	doctor.Specialization = specialization
-	doctor.IsApproved = false
-	doctor.IsNew = true
+	doctor.Status = env.STATUS_NEW
 
 
 

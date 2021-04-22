@@ -9,6 +9,7 @@ type Package struct {
 	Description  string `json:"description"`
 	ConsultationService     *ConsultationService `gorm:"foreignkey:consultationserviceID" json:"consultationservice"`
 	ConsultationServiceID int64
+	Duration int64  `json:"duration"`
 }
 
 func (Package) TableName() string {

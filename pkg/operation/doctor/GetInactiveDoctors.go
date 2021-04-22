@@ -8,7 +8,7 @@ import (
 func GetNewDoctors()  ([]*model.Doctor,error){
 	db :=env.RDB
 	doctors := []*model.Doctor{}
-	db.Model(model.Doctor{}).Where("is_new = ?",true).Scan(&doctors)
+	db.Model(model.Doctor{}).Where("is_new = ?",env.STATUS_NEW).Scan(&doctors)
 	return doctors,nil
 
 }

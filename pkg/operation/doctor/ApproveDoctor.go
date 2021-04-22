@@ -8,11 +8,11 @@ import (
 	"strings"
 )
 
-func ApproveDoctor(id int,approve bool,role string)  (*model.Doctor,error){
+func ApproveDoctor(id int,approve string,role string)  (*model.Doctor,error){
 	db :=env.RDB
 
 	if strings.EqualFold(role,env.ADMIN){
-		err := db.Model(&model.Doctor{}).Where("id = ?", id).Update("is_new",approve).Error
+		err := db.Model(&model.Doctor{}).Where("id = ?", id).Update("status",approve).Error
 		if err!=nil{
 			return nil,err
 		}else{

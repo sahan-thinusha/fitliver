@@ -1,15 +1,18 @@
-package doctor
+package consultation_service
+
 
 import (
 	"fitliver/pkg/env"
+	_ "fitliver/pkg/env"
 	"fitliver/pkg/model"
-	op "fitliver/pkg/operation/doctor"
+	op "fitliver/pkg/operation/consultation_service"
 	"github.com/dgrijalva/jwt-go"
+	_ "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"strconv"
 )
 
-func ApproveDoctor(c echo.Context) (*model.Doctor, error) {
+func ApproveConsultationRequest(c echo.Context) (*model.ConsultationRequest, error) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	approve,_ := strconv.ParseBool(c.QueryParam("approve"))
 	user := c.Get("user").(*jwt.Token)
@@ -22,7 +25,6 @@ func ApproveDoctor(c echo.Context) (*model.Doctor, error) {
 		status = env.STATUS_REJECTED
 	}
 
-	result,err := op.ApproveDoctor(id, status,claims.Auth)
+	result,err := op.ApproveConsultationRequest(int64(id),status,claims.Sub)
 	return result, err
-
 }
