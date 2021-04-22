@@ -29,8 +29,22 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 			patientConsalt.PurchasedAt = time.Now()
 			db.Create(&patientConsalt)
 		}else{
-
+			t := time.Now()
+			diff := t .Sub(pc.PurchasedAt).Hours() / 24
+			if (diff - pc.Duration) > 0{
+				pc.Duration = (diff - pc.Duration) + request.Package.Duration
+				db.Save(&pc)
+			}else {
+				pc.Duration = request.Package.Duration
+				pc.PurchasedAt = time.Now()
+				db.Save(&pc)
+			}
 		}
+	}else 	if strings.EqualFold(status,env.STATUS_REJECTED) {
+		payment := model.Payment{}
+		db.Model(&model.Payment{}).Where("package_id = ?",request.Package.ID).First(&payment)
+		db.Model(&model.Payment{}).Where("id = ?", payment.ID).Update("status","REFUNDED")
 	}
-	return &request,nil
+		return &request,nil
+
 }
