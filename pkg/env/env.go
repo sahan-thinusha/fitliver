@@ -15,7 +15,7 @@ var DBdb = "fitliver"
 
 var DBhost = "127.0.0.1"
 
-var DBport = "3307"
+var DBport = "3306"
 
 var DBuser = "root"
 
