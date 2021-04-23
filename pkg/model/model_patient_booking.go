@@ -13,6 +13,11 @@ type Patient_Booking struct{
 	ConsultationService    *ConsultationService   `gorm:"foreignkey:consultations_serviceID" json:"consultations_service"`
 	ConsultationServiceID  int64
 	PurchasedAt time.Time `json:"purchased_at"`
+	BookedDate string
+	TimeFrom string
+	TimeTo string
+	Hospital     *Hospital `gorm:"foreignkey:hospitalID" json:"hospital"`
+	HospitalID int64
 }
 
 func (Patient_Booking) TableName() string {

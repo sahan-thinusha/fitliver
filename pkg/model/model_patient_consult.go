@@ -5,19 +5,16 @@ import (
 	"time"
 )
 
-type Patient_Consult struct{
+type Patient_Consult struct {
 	Model
-	Patient    *Patient   `gorm:"foreignkey:patientID" json:"patient"`
-	PatientID  int64
-	ConsultationService    *ConsultationService   `gorm:"foreignkey:consultations_serviceID" json:"consultations_service"`
-	ConsultationServiceID  int64
-	PurchasedAt time.Time `json:"purchased_at"`
-	BookedDate string
-	TimeFrom string
-	TimeTo string
-	Hospital     *Hospital `gorm:"foreignkey:hospitalID" json:"hospital"`
-	HospitalID int64
+	Patient               *Patient `gorm:"foreignkey:patientID" json:"patient"`
+	PatientID             int64
+	ConsultationService   *ConsultationService `gorm:"foreignkey:consultations_serviceID" json:"consultations_service"`
+	ConsultationServiceID int64
+	PurchasedAt           time.Time `json:"purchased_at"`
+	Duration float64 `json:"duration"`
 }
+
 
 func (Patient_Consult) TableName() string {
 	return "patient_consult"

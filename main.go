@@ -92,6 +92,9 @@ func run() {
 	controller_echo.APIControllerDietPlanService(r)
 	controller_echo.APIControllerHealthRecordService(r)
 	controller_echo.APIControllerRating(r)
+	controller_echo.APIControllerAvailability(r)
+	controller_echo.APIControllerWorkoutPlan(r)
+
 	u := e.Group("/")
 	u.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		if subtle.ConstantTimeCompare([]byte(username), []byte("fitliver")) == 1 &&
