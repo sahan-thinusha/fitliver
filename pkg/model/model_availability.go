@@ -8,10 +8,10 @@ type Availability struct {
 	DoctorID int64
 	Hospital     *Hospital `gorm:"foreignkey:hospitalID" json:"hospital"`
 	HospitalID int64
-	AvailableDate string
-	TimeFrom string
-	TimeTo string
-	IsFree bool
+	AvailableDate string `json:"available_date"`
+	TimeFrom string `json:"time_from"`
+	TimeTo string `json:"time_to"`
+	IsFree bool `json:"isfree"`
 
 }
 
@@ -19,5 +19,5 @@ func (Availability) TableName() string {
 	return "availability"
 }
 func (m *Availability) PreloadAvailability(db *gorm.DB) *gorm.DB {
-	return db.Preload("Doctor").Preload("User")
+	return db.Preload("Doctor").Preload("Doctor.User")
 }

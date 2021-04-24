@@ -28,7 +28,7 @@ func SaveHospital(c echo.Context) error {
 }
 func APIControllerHospital(g *echo.Group) {
 	g.GET("api/gethospitals", GetHospitals)
-	g.POST("api/gethospital", SaveHospital)
+	g.POST("api/hospital", SaveHospital)
 
 }
 

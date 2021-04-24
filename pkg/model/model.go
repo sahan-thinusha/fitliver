@@ -30,10 +30,25 @@ func InitModels(db *gorm.DB) {
 	db.AutoMigrate(&DietPlan{})
 	db.AutoMigrate(&FoodData{})
 	db.AutoMigrate(&ConsultationService{})
+	db.AutoMigrate(&ConsultationRequest{})
 	db.AutoMigrate(&Payment{})
 	db.AutoMigrate(&Package{})
 	db.AutoMigrate(&Service{})
 	db.AutoMigrate(&HealthRecord{})
 	db.AutoMigrate(&Rating{})
+	db.AutoMigrate(&BookingRequest{})
+	db.AutoMigrate(&BookingPayment{})
+	db.AutoMigrate(&BookingService{})
+	db.AutoMigrate(&Patient_Booking{})
+	db.AutoMigrate(&Patient_Consult{})
+	db.AutoMigrate(&Availability{})
+	db.AutoMigrate(&Workout{})
+	db.AutoMigrate(&WorkoutPlan{})
+
+
+
+
+
+
 
 }

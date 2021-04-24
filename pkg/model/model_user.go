@@ -17,18 +17,18 @@ type User struct {
 }
 
 func (m *User) PreloadUser(db *gorm.DB) *gorm.DB {
-	return db.Preload("Role")
+	return db
 }
 
 
 func (m *User) PreloadPatient(db *gorm.DB) *gorm.DB {
-	return db.Preload("Role").Preload("Patient")
+	return db.Preload("Patient")
 }
 
 func (m *User) PreloadDoctor(db *gorm.DB) *gorm.DB {
-	return db.Preload("Role").Preload("Doctor")
+	return db.Preload("Doctor")
 }
 
 func (m *User) PreloadDoctorPackages(db *gorm.DB) *gorm.DB {
-	return db.Preload("Role").Preload("Doctor").Preload("ConsultationService").Preload("Package")
+	return db.Preload("Doctor").Preload("ConsultationService").Preload("Package")
 }

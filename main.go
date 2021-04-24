@@ -4,6 +4,7 @@ import (
 	"crypto/subtle"
 	logger "fitliver/pkg/logger"
 	model "fitliver/pkg/model"
+	"fitliver/pkg/operation/workout"
 	gorm "github.com/jinzhu/gorm"
 	"os"
 )
@@ -49,6 +50,7 @@ func main() {
 		_ = os.Mkdir(folderPath, os.ModePerm)
 	}
 	CreateDefaultUser()
+	workout.AddWorkout()
 	RunProxy()
 }
 

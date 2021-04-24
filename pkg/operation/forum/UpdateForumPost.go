@@ -15,7 +15,7 @@ func ForumPostUpdate(forum *model.ForumPost,email string)  (*model.ForumPost,err
 	if forumData.User.ID == user.ID{
 		forumData.Body = forum.Body
 		forumData.Title = forum.Title
-		err := db.Save(forumData).Error
+		err := db.Save(&forumData).Error
 		if err!=nil{
 			return nil,err
 		}else{

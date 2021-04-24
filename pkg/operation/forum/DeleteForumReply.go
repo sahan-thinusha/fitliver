@@ -14,7 +14,7 @@ func ForumReplyDelete(id int64,email string,role string)  (*model.ForumReply,err
 	forumReply := model.ForumReply{}
 	forumReply.PreloadForumReply(db).First(&forumReply,id)
 	if forumReply.User.ID == user.ID || strings.EqualFold(env.ADMIN,role){
-		err := db.Delete(forumReply).Error
+		err := db.Delete(&forumReply).Error
 		if err!=nil{
 			return nil,err
 		}else{

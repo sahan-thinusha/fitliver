@@ -72,7 +72,7 @@ func UpdateForumReply(c echo.Context) error {
 	}
 }
 func DeleteForumReply(c echo.Context) error {
-	result, err := forum.CreateForumPost(c)
+	result, err := forum.DeleteForumReply(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	} else {

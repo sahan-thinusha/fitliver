@@ -61,7 +61,7 @@ func GetAvailabilitys(c echo.Context) error {
 
 func APIControllerAvailability(g *echo.Group) {
 	g.POST("api/availability", CreateAvailability)
-	g.PUT("api/availability/:id", UpdateAvailability)
+	g.PUT("api/availability", UpdateAvailability)
 	g.DELETE("api/availability/:id", DeleteAvailability)
 	g.GET("api/availability/:id", GetAvailability)
 	g.GET("api/availability", GetAvailabilitys)

@@ -18,5 +18,5 @@ func (ForumPost) TableName() string {
 	return "forum_post"
 }
 func (m *ForumPost) PreloadForumPost(db *gorm.DB) *gorm.DB {
-	return db.Preload("User").Preload("ForumReply")
+	return db.Preload("User").Preload("ForumReply").Preload("ForumReply.User")
 }

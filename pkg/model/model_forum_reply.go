@@ -12,7 +12,7 @@ type ForumReply struct {
 }
 
 func (ForumReply) TableName() string {
-	return "forum_post"
+	return "forum_reply"
 }
 func (m *ForumReply) PreloadForumReply(db *gorm.DB) *gorm.DB {
 	return db.Preload("User").Preload("ForumPost")

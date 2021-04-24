@@ -16,7 +16,7 @@ func BlogCommentUpdate(comment *model.BlogComment,email string)  (*model.BlogCom
 
 	if blogComment.User.ID == user.ID{
 		blogComment.Comment = comment.Comment
-		err := db.Save(blogComment).Error
+		err := db.Save(&blogComment).Error
 		if err!=nil{
 			return nil,err
 		}else{

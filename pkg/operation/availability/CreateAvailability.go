@@ -10,7 +10,7 @@ import (
 func AddAvailabiility(availability *model.Availability,email string)  (*model.Availability,error){
 	db :=env.RDB
 	user := model.User{}
-	db.Model(model.User{}).Where("email = ?",email).First(&user)
+	user.PreloadDoctor(db).Where("email = ?",email).First(&user)
 	availability.Doctor = user.Doctor
 	availability.IsFree = true
 	hospital := model.Hospital{}

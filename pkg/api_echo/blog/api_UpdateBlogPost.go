@@ -4,6 +4,7 @@ import (
 	"fitliver/pkg/env"
 	"fitliver/pkg/model"
 	op "fitliver/pkg/operation/blog"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"io"
@@ -16,7 +17,7 @@ func UpdateBlogPost(c echo.Context) (*model.Blog, error) {
 	id := c.Param("id")
 	title := c.FormValue("title")
 	body := c.FormValue("body")
-
+fmt.Println("SS")
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*env.JwtCustomClaims)
 

@@ -76,7 +76,7 @@ func UpdateBlogComment(c echo.Context) error {
 	}
 }
 func DeleteBlogComment(c echo.Context) error {
-	result, err := blog.CreateBlogPost(c)
+	result, err := blog.DeleteBlogComment(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	} else {

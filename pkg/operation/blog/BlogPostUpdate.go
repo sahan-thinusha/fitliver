@@ -17,7 +17,7 @@ func BlogPostUpdate(blog *model.Blog,email string)  (*model.Blog,error){
 		blogData.Image = blog.Image
 		blogData.Body = blog.Body
 		blogData.Title = blog.Title
-		err := db.Save(blogData).Error
+		err := db.Save(&blogData).Error
 		if err!=nil{
 			return nil,err
 		}else{

@@ -17,7 +17,7 @@ func ForumReplyUpdate(forumReply *model.ForumReply,email string)  (*model.ForumR
 	ForumReplyData.PreloadForumReply(db).First(&ForumReplyData,forumReply.ID)
 	if ForumReplyData.User.ID == user.ID{
 		ForumReplyData.Comment = forumReply.Comment
-		err := db.Save(ForumReplyData).Error
+		err := db.Save(&ForumReplyData).Error
 		if err!=nil{
 			return nil,err
 		}else{
