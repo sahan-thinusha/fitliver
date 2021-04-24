@@ -37,8 +37,6 @@ func DeleteConsultationService(c echo.Context) error {
 }
 
 
-
-
 func GetAllConsultationServices(c echo.Context) error {
 	result, err := consultation_service.GetAllConsultationServices(c)
 	if err != nil {
@@ -70,6 +68,15 @@ func GetAllConsultationServicesForDoctor(c echo.Context) error {
 }
 
 
+func ConsultationServicesApprove(c echo.Context) error {
+	result, err := consultation_service.ApproveConsultationRequest(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
 
 
 func APIControllerConsultationService(g *echo.Group) {
@@ -79,4 +86,5 @@ func APIControllerConsultationService(g *echo.Group) {
 	g.GET("api/consultationservice/:id", GetConsultationServicesById)
 	g.GET("api/consultationservice", GetAllConsultationServices)
 	g.GET("api/consultationservice/doctor", GetAllConsultationServicesForDoctor)
+	g.PUT("api/consultationservice/request/approve/:id", ConsultationServicesApprove)
 }

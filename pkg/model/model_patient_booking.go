@@ -10,8 +10,8 @@ type Patient_Booking struct{
 	Model
 	Patient    *Patient   `gorm:"foreignkey:patientID" json:"patient"`
 	PatientID  int64
-	ConsultationService    *ConsultationService   `gorm:"foreignkey:consultations_serviceID" json:"consultations_service"`
-	ConsultationServiceID  int64
+	BookingService    *BookingService   `gorm:"foreignkey:booking_serviceID" json:"booking_service"`
+	BookingServiceID  int64
 	PurchasedAt time.Time `json:"purchased_at"`
 	BookedDate string
 	TimeFrom string
@@ -23,6 +23,6 @@ type Patient_Booking struct{
 func (Patient_Booking) TableName() string {
 	return "patient_booking"
 }
-func (m *Patient_Booking) PreloadPPatient_Booking(db *gorm.DB) *gorm.DB {
-	return db.Preload("Patient").Preload("ConsultationService").Preload("Doctor")
+func (m *Patient_Booking) PreloadPatient_Booking(db *gorm.DB) *gorm.DB {
+	return db.Preload("Patient").Preload("BookingService").Preload("Doctor")
 }

@@ -1,5 +1,6 @@
 package booking
 
+
 import (
 	"fitliver/pkg/env"
 	_ "fitliver/pkg/env"
@@ -10,7 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func GetAllBookingsForDoctorByDate(c echo.Context) ([]*model.Patient_Booking, error) {
+func GetAllBookingsForPatientByDate(c echo.Context) ([]*model.Patient_Booking, error) {
 	date := c.QueryParam("date")
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*env.JwtCustomClaims)

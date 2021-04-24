@@ -16,6 +16,8 @@ type BookingPayment struct {
 	PatientID int64
 	Booking     BookingService `gorm:"foreignkey:bookingID" json:"booking"`
 	BookingID int64
+	BookingRequest     BookingRequest `gorm:"foreignkey:bookingRequestID" json:"booking_request"`
+	BookingRequestID int64
 }
 
 func (BookingPayment) TableName() string {

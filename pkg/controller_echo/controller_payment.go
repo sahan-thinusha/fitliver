@@ -15,8 +15,18 @@ func CreatePayment(c echo.Context) error {
 	}
 }
 
+func CreateBookingPayment(c echo.Context) error {
+	result, err := payment.BookingPayment(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
 
 func APIControllerPayment(g *echo.Group) {
 	g.POST("api/pay", CreatePayment)
+	g.POST("api/booking/pay", CreateBookingPayment)
 
 }

@@ -10,9 +10,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func MakePayment(c echo.Context) (*model.Payment, error) {
+func BookingPayment(c echo.Context) (*model.BookingPayment, error) {
 	token := c.Param("token")
-	payment := model.Payment{}
+	payment := model.BookingPayment{}
 	if error := c.Bind(&payment); error != nil {
 		return nil, error
 	}
@@ -20,7 +20,7 @@ func MakePayment(c echo.Context) (*model.Payment, error) {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*env.JwtCustomClaims)
 
-	result,err := op.ProceedPayment(&payment,token,claims.Sub)
+	result,err := op.ProceedBookingPayment(&payment,token,claims.Sub)
 	return result, err
 }
 
