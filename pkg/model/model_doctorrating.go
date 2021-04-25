@@ -19,5 +19,5 @@ func (Rating) TableName() string {
 	return "rating"
 }
 func (m *Rating) PreloadRating(db *gorm.DB) *gorm.DB {
-	return  db.Preload("User").Preload("Doctor")
+	return  db.Preload("User").Preload("User.Doctor")
 }

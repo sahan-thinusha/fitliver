@@ -2,7 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
-type  FoodData struct{
+type   FoodData struct{
 	Label     string `json:"label"`
 	Nutrients struct {
 		EnercKcal float64     `json:"enerc_kcal"`

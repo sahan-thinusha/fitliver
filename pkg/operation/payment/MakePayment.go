@@ -15,21 +15,21 @@ func ProceedPayment(payment *model.Payment, token string, email string) (*model.
 	user.PreloadPatient(db).Model(model.User{}).Where("email = ?", email).First(&user)
 	payment.ReceiptEmail = email
 	pack := model.Package{}
-	pack.PreloadPackage(db).Model(model.Package{}).First(&pack, payment.Package.ID)
+	db.Model(model.Package{}).First(&pack, payment.PackageID)
+	cons := model.ConsultationService{}
+	db.Model(model.ConsultationService{}).First(&cons, pack.ConsultationServiceID)
+	pack.ConsultationService = &cons
 	payment.ReceiptEmail = email
 	payment.Amount = pack.Amount
-	payment.Name = pack.Name + " " + pack.ConsultationService.Name
-	name := ""
-	if user.Patient != nil {
-		name = user.Patient.Name
-	}
-	stripeCharge, err := charge.New(&stripe.ChargeParams{
+	payment.Name =  pack.ConsultationService.Name + " " + pack.Name
+
+		stripeCharge, err := charge.New(&stripe.ChargeParams{
 		Amount:       stripe.Int64(payment.Amount * 100),
 		Currency:     stripe.String(string(stripe.CurrencyLKR)),
 		Description:  stripe.String(payment.Name),
+		//Source:       &stripe.SourceParams{Token: stripe.String("tok_visa")},
 		Source:       &stripe.SourceParams{Token: stripe.String(token)},
-		ReceiptEmail: stripe.String(payment.ReceiptEmail),
-		Customer:     stripe.String(name)})
+		ReceiptEmail: stripe.String(payment.ReceiptEmail)})
 	if stripeCharge != nil {
 		payment.PaymentId = stripeCharge.ID
 	}

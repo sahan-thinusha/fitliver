@@ -13,25 +13,22 @@ import (
 func ProceedBookingPayment(payment *model.BookingPayment, token string, email string) (*model.BookingPayment, error) {
 	stripe.Key = env.StripeSecretKey
 	db := env.RDB
+	db.LogMode(true)
 	user := model.User{}
 	user.PreloadPatient(db).Model(model.User{}).Where("email = ?", email).First(&user)
 	payment.ReceiptEmail = email
 	booking := model.BookingService{}
-	booking.PreloadBookingService(db).Model(model.Package{}).First(&booking, payment.Booking.ID)
+	booking.PreloadBookingService(db).Model(model.Package{}).First(&booking, payment.BookingID)
 	payment.ReceiptEmail = email
 	payment.Amount = booking.Amount
 	payment.Name = booking.Name
-	name := ""
-	if user.Patient != nil {
-		name = user.Patient.Name
-	}
+
 	stripeCharge, err := charge.New(&stripe.ChargeParams{
 		Amount:       stripe.Int64(payment.Amount * 100),
 		Currency:     stripe.String(string(stripe.CurrencyLKR)),
 		Description:  stripe.String(payment.Name),
 		Source:       &stripe.SourceParams{Token: stripe.String(token)},
-		ReceiptEmail: stripe.String(payment.ReceiptEmail),
-		Customer:     stripe.String(name)})
+		ReceiptEmail: stripe.String(payment.ReceiptEmail)})
 	if stripeCharge != nil {
 		payment.PaymentId = stripeCharge.ID
 	}

@@ -62,8 +62,8 @@ func BookingServicesApprove(c echo.Context) error {
 func APIControllerBookingService(g *echo.Group) {
 	g.POST("api/bookingservice", CreateBookingService)
 	g.GET("api/bookingservice/request", GetBookingRequests)
-	g.GET("api/bookingservice/patient", GetAllBookingServicesForDoctor)
-	g.GET("api/bookingservice/doctor", GetAllBookingServicesForPatient)
+	g.GET("api/bookingservice/doctor", GetAllBookingServicesForDoctor)
+	g.GET("api/bookingservice/patient", GetAllBookingServicesForPatient)
 	g.POST("api/bookingservice/request/approve/:id", BookingServicesApprove)
 
 }

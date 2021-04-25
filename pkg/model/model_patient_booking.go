@@ -24,5 +24,5 @@ func (Patient_Booking) TableName() string {
 	return "patient_booking"
 }
 func (m *Patient_Booking) PreloadPatient_Booking(db *gorm.DB) *gorm.DB {
-	return db.Preload("Patient").Preload("BookingService").Preload("Doctor")
+	return db.Preload("Patient").Preload("BookingService").Preload("BookingService.Doctor")
 }

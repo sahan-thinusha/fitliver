@@ -13,8 +13,8 @@ func GetDoctors()  ([]*model.Doctor,error){
 	doctorList := []*model.Doctor{}
 	for _,doctor := range doctors{
 		summary := RateSummary{}
-		db.Model(model.Rating{}).Select("AVG(rating) AS avgRate").Where("doctor = ?",doctor.ID).Scan(&summary)
-		doctor.Rate= summary.avgRate
+		db.Model(model.Rating{}).Select("AVG(rate) AS rate").Where("doctor_id = ?",doctor.ID).Scan(&summary)
+		doctor.Rate= summary.Rate
 		doctorList = append(doctorList,doctor)
 	}
 

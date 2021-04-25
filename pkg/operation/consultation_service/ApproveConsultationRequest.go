@@ -3,6 +3,8 @@ package consultation_service
 import (
 	"fitliver/pkg/env"
 	"fitliver/pkg/model"
+	"github.com/stripe/stripe-go"
+	"github.com/stripe/stripe-go/refund"
 	"strings"
 	"time"
 )
@@ -18,6 +20,10 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 	}
 	request := model.ConsultationRequest{}
 	request.PreloadConsultationRequest(db).First(&request,id)
+	cons := model.ConsultationService{}
+	db.Model(model.ConsultationService{}).First(&cons, request.Package.ConsultationServiceID)
+	request.Package.ConsultationService = &cons
+
 	if strings.EqualFold(status,env.STATUS_APPROVED){
 		pc := model.Patient_Consult{}
 		b := db.Model(&model.Patient_Consult{}).Where("consultations_service_id = ?",request.Package.ConsultationService.ID).First(&pc).RecordNotFound()
@@ -43,6 +49,11 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 	}else 	if strings.EqualFold(status,env.STATUS_REJECTED) {
 		payment := model.Payment{}
 		db.Model(&model.Payment{}).Where("package_id = ?",request.Package.ID).First(&payment)
+		stripe.Key = env.StripeSecretKey
+		params := &stripe.RefundParams{
+			Charge: stripe.String(payment.PaymentId),
+		}
+		refund.New(params)
 		db.Model(&model.Payment{}).Where("id = ?", payment.ID).Update("status","REFUNDED")
 	}
 		return &request,nil

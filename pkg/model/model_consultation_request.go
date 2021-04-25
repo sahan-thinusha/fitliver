@@ -17,5 +17,5 @@ func (ConsultationRequest) TableName() string {
 	return "consultation_request"
 }
 func (m *ConsultationRequest) PreloadConsultationRequest(db *gorm.DB) *gorm.DB {
-	return db.Preload("Patient").Preload("Package").Preload("ConsultationService")
+	return db.Preload("Patient").Preload("Package")
 }

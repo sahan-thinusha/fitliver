@@ -14,7 +14,7 @@ func RatingUpdate(rating *model.Rating,email string)  (*model.Rating,error){
 	rating.PreloadRating(db).First(&rate,rating.ID)
 	if rate.User.ID == user.ID{
 		rate.Rate = rating.Rate
-		err := db.Save(rate).Error
+		err := db.Save(&rate).Error
 		if err!=nil{
 			return nil,err
 		}else{

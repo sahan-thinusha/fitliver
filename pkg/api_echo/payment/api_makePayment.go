@@ -5,6 +5,7 @@ import (
 	_ "fitliver/pkg/env"
 	"fitliver/pkg/model"
 	op "fitliver/pkg/operation/payment"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	_ "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
@@ -17,6 +18,7 @@ func MakePayment(c echo.Context) (*model.Payment, error) {
 		return nil, error
 	}
 
+	fmt.Println(payment)
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*env.JwtCustomClaims)
 

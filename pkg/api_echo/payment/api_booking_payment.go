@@ -11,7 +11,7 @@ import (
 )
 
 func BookingPayment(c echo.Context) (*model.BookingPayment, error) {
-	token := c.Param("token")
+	token := c.QueryParam("token")
 	payment := model.BookingPayment{}
 	if error := c.Bind(&payment); error != nil {
 		return nil, error

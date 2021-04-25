@@ -22,5 +22,5 @@ func (BookingRequest) TableName() string {
 	return "booking_request"
 }
 func (m *BookingRequest) PreloadBookingRequest(db *gorm.DB) *gorm.DB {
-	return db.Preload("Patient").Preload("BookingService").Preload("Hospital")
+	return db.Preload("Patient").Preload("Booking").Preload("Hospital")
 }
