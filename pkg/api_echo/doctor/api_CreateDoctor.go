@@ -46,34 +46,33 @@ func CreateDoctor(c echo.Context) (*model.Doctor, error) {
 
 
 	file, err := c.FormFile("profile_pic")
-	if err != nil {
-		return nil,err
+	if err==nil{
+		src, err := file.Open()
+		if err != nil {
+			return nil,err
+		}
+		defer src.Close()
+
+
+		folderPath := "doctor_images"
+		if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+			_ = os.Mkdir(folderPath, os.ModePerm)
+		}
+
+		fileSuffix := strconv.FormatInt(time.Now().UnixNano(), 10)
+		dst, err := os.Create(folderPath + "/" + fileSuffix + "_" + file.Filename)
+		if err != nil {
+			return nil,err
+		}
+		defer dst.Close()
+
+		if _, err = io.Copy(dst, src); err != nil {
+			return nil,err
+		}
+
+		doctor.ProfilePic = dst.Name()
+
 	}
-	src, err := file.Open()
-	if err != nil {
-		return nil,err
-	}
-	defer src.Close()
-
-
-	folderPath := "doctor_images"
-	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
-		_ = os.Mkdir(folderPath, os.ModePerm)
-	}
-
-	fileSuffix := strconv.FormatInt(time.Now().UnixNano(), 10)
-	dst, err := os.Create(folderPath + "/" + fileSuffix + "_" + file.Filename)
-	if err != nil {
-		return nil,err
-	}
-	defer dst.Close()
-
-	if _, err = io.Copy(dst, src); err != nil {
-		return nil,err
-	}
-
-	doctor.ProfilePic = dst.Name()
-
 
 	result,err := op.DoctorRegister(&doctor,hospitals)
 	return result, err
