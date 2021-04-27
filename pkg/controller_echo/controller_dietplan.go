@@ -54,7 +54,7 @@ func GetSavedPatientDietPlansForDates(c echo.Context) error {
 }
 
 func APIControllerDietPlanService(g *echo.Group) {
-	g.GET("api/diet_plan", GetDietPlan)
+	g.POST("api/diet_plan", GetDietPlan)
 	g.POST("api/diet_plan", SaveDietPlan)
 	g.PUT("api/diet_plan", UpdateDietPlan)
 	g.GET("api/diet_plan/:id", GetSavedPatientDietPlans)
