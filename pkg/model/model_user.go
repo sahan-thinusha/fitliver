@@ -7,7 +7,7 @@ import (
 type User struct {
 	Model
 	Name string  `json:"name"`
-	Email  string  `json:"email"`
+	Email  string  `json:"email" gorm:"uniqueIndex"`
 	Password  string  `json:"password"  gorm:"size:2000"`
 	Token     string  `json:"token"`
 	Role     string  `json:"role"`

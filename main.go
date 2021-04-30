@@ -79,6 +79,7 @@ func run() {
 	}
 
 
+
 	r.Use(middleware.JWTWithConfig(jwtConfig))
 	controller_echo.APIControllerServer(r)
 	controller_echo.APIControllerDoctor(r)

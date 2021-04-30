@@ -3,6 +3,7 @@ package patient
 import (
 	"fitliver/pkg/env"
 	"fitliver/pkg/model"
+	"fmt"
 	"time"
 )
 
@@ -15,15 +16,28 @@ func GetDoctorPatients(email string)  ([]*model.Patient,error){
 	cs := model.Patient_Consult{}
 	cons := []*model.Patient_Consult{}
 
-	cs.PreloadPatient_Consult(db).Joins("join consultations_service on consultations_service.id = patient_consult.consultations_service_id").Joins("join doctor on doctor.id = consultations_service.doctor_id").Where("doctor.id = ?",user.Doctor.ID).Find(&cons)
+	cs.PreloadPatient_Consult(db).Joins("join consultation_service on consultation_service.id = patient_consult.consultation_service_id").Joins("join doctor on doctor.id = consultation_service.doctor_id").Where("doctor.id = ?",user.Doctor.ID).Find(&cons)
 
 	patients := []*model.Patient{}
-	for _,consalt := range cons {
+	patientData := []*model.Patient{}
+
+	for _, consult := range cons {
+		fmt.Println(consult.Patient.Name)
 		t := time.Now()
-		diff := t .Sub(consalt.PurchasedAt).Hours() / 24
-		if (diff - consalt.Duration) > 0{
-			patients = append(patients,consalt.Patient)
+		diff := t .Sub(consult.PurchasedAt).Hours() / 24
+		fmt.Println(diff)
+		if (consult.Duration - diff) > 0{
+			patients = append(patients, consult.Patient)
 		}
 	}
-	return patients,nil
+	check := make(map[*model.Patient]int)
+
+	for _, val := range patients {
+		check[val] = 1
+	}
+
+	for data, _ := range check {
+		patientData = append(patientData,data)
+	}
+	return patientData,nil
 }

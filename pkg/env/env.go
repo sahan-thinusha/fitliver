@@ -19,7 +19,7 @@ var DBport = "3306"
 
 var DBuser = "root"
 
-var DBpwd = "12345"
+var DBpwd = "sahan"
 
 var StripeAPIKey = "pk_test_51IdOGzIc2dfDJNEgxjsDGTWzPiq2SjJyRkKeqRXiYQoytDe1Ye8QrTJSyoHtLMyaFKKbxeAIqxjxxR3n8alBjfGM00xiDA7cDq"
 

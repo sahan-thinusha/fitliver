@@ -8,6 +8,7 @@ type ConsultationService struct {
 	Packages []*Package `json:"package" gorm:"foreignKey:ConsultationServiceID"`
 	Service  []*Service `gorm:"many2many:consultation_service_service" json:"service"`
 	Doctor     *Doctor `gorm:"foreignkey:doctorID" json:"doctor"`
+	Patient_Consult []*Patient_Consult `json:"patient_consult" gorm:"foreignKey:consultations_serviceID"`
 	DoctorID int64
 }
 

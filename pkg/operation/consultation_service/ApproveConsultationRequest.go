@@ -29,7 +29,7 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 		b := db.Model(&model.Patient_Consult{}).Where("consultations_service_id = ?",request.Package.ConsultationService.ID).First(&pc).RecordNotFound()
 		if b{
 			patientConsalt := model.Patient_Consult{}
-			patientConsalt.ConsultationService = request.Package.ConsultationService
+			patientConsalt.ConsultationsService = request.Package.ConsultationService
 			patientConsalt.Duration = request.Package.Duration
 			patientConsalt.Patient = request.Patient
 			patientConsalt.PurchasedAt = time.Now()

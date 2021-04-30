@@ -24,8 +24,19 @@ func GetPatients(c echo.Context) error {
 	}
 }
 
+func GetPatientsbyDoctor(c echo.Context) error {
+	result, err := patient.GetPDoctorSubscribedPatients(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
+
 func APIControllerPatient(g *echo.Group) {
 	g.GET("api/patient/:id", GetPatient)
 	g.GET("api/patients", GetPatients)
+	g.GET("api/doctor/patients", GetPatientsbyDoctor)
 
 }
