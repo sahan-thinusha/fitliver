@@ -14,6 +14,7 @@ func ProceedPayment(payment *model.Payment, token string, email string) (*model.
 	user := model.User{}
 	user.PreloadPatient(db).Model(model.User{}).Where("email = ?", email).First(&user)
 	payment.ReceiptEmail = email
+	payment.Patient = user.Patient
 	pack := model.Package{}
 	db.Model(model.Package{}).First(&pack, payment.PackageID)
 	cons := model.ConsultationService{}

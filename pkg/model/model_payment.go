@@ -10,7 +10,7 @@ type Payment struct {
 	ReceiptEmail string `json:"receiptMail"`
 	Name string   `json:"name"`
 	PaymentId string   `json:"payment_id"`
-	Patient     Patient `gorm:"foreignkey:patientID" json:"patient"`
+	Patient     *Patient `gorm:"foreignkey:patientID" json:"patient"`
 	Status  string   `json:"status"`
 	PatientID int64
 	Package     Package `gorm:"foreignkey:packageID" json:"package"`

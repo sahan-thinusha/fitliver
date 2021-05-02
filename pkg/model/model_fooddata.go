@@ -7,7 +7,7 @@ type   FoodData struct{
 	Nutrients struct {
 		EnercKcal float64     `json:"enerc_kcal"`
 		Procnt    float64 `json:"procnt"`
-		Fat       float64 `json:"fat`
+		Fat       float64 `json:"fat"`
 		Chocdf    float64     `json:"chocdf"`
 		Fibtg     float64     `json:"fibtg"`
 	} `json:"nutrients"`

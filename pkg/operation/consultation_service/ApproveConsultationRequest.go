@@ -26,10 +26,11 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 
 	if strings.EqualFold(status,env.STATUS_APPROVED){
 		pc := model.Patient_Consult{}
-		b := db.Model(&model.Patient_Consult{}).Where("consultations_service_id = ?",request.Package.ConsultationService.ID).First(&pc).RecordNotFound()
+		b := db.Model(&model.Patient_Consult{}).Where("consultation_service_id = ?",request.Package.ConsultationService.ID).First(&pc).RecordNotFound()
 		if b{
 			patientConsalt := model.Patient_Consult{}
 			patientConsalt.ConsultationsService = request.Package.ConsultationService
+			patientConsalt.ConsultationServiceID = request.Package.ConsultationService.ID
 			patientConsalt.Duration = request.Package.Duration
 			patientConsalt.Patient = request.Patient
 			patientConsalt.PurchasedAt = time.Now()
@@ -37,8 +38,8 @@ func ApproveConsultationRequest(id int64,status string,email string)  (*model.Co
 		}else{
 			t := time.Now()
 			diff := t .Sub(pc.PurchasedAt).Hours() / 24
-			if (diff - pc.Duration) > 0{
-				pc.Duration = (diff - pc.Duration) + request.Package.Duration
+			if (pc.Duration - diff ) > 0{
+				pc.Duration = (pc.Duration - diff ) + request.Package.Duration
 				db.Save(&pc)
 			}else {
 				pc.Duration = request.Package.Duration

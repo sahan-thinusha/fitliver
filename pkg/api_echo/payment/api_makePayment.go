@@ -12,7 +12,7 @@ import (
 )
 
 func MakePayment(c echo.Context) (*model.Payment, error) {
-	token := c.Param("token")
+	token := c.QueryParam("token")
 	payment := model.Payment{}
 	if error := c.Bind(&payment); error != nil {
 		return nil, error
