@@ -7,6 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -39,6 +40,16 @@ func Login(c echo.Context) error {
 	} else {
 		user := model.User{}
 		b := db.Where("email = ? AND password = ?", loginRequest.Email, loginRequest.Password).First(&user).RecordNotFound()
+		if strings.EqualFold(user.Role,env.DOCTOR){
+			doctor := model.Doctor{}
+			db.Where("user_id = ?",user.ID).First(&doctor)
+			user.Doctor = &doctor
+		}else if strings.EqualFold(user.Role,env.PATIENT) {
+			patient := model.Patient{}
+			db.Where("user_id = ?", user.ID).First(&patient)
+			user.Patient = &patient
+		}
+
 		if !b {
 			targetUser = &user
 		}
