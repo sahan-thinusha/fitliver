@@ -43,4 +43,5 @@ type JwtCustomClaims struct {
 	jwt.StandardClaims
 }
 
+
 var FoodAPI = "https://api.edamam.com/api/food-database/v2/parser"

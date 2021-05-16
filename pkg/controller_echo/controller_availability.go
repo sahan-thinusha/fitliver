@@ -57,6 +57,15 @@ func GetAvailabilitys(c echo.Context) error {
 	}
 }
 
+func GetAvailabilitysforDoctor(c echo.Context) error {
+	result, err := availability.GetAvailabilityByDateDoctor(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		return c.JSON(http.StatusOK, result)
+	}
+}
+
 
 
 func APIControllerAvailability(g *echo.Group) {
@@ -65,5 +74,6 @@ func APIControllerAvailability(g *echo.Group) {
 	g.DELETE("api/availability/:id", DeleteAvailability)
 	g.GET("api/availability/:id", GetAvailability)
 	g.GET("api/availability", GetAvailabilitys)
+	g.GET("api/availability/:id", GetAvailabilitysforDoctor)
 
 }

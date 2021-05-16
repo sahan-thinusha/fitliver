@@ -8,6 +8,7 @@ import (
 func GetAvailabilityByDate(date string,email string)  ([]*model.Availability,error){
 	db :=env.RDB
 	user := model.User{}
+
 	db.Model(model.User{}).Where("email = ?",email).First(&user)
 	avalabilities := []*model.Availability{}
 	availability := model.Availability{}
